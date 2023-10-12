@@ -1,3 +1,11 @@
+'''
+Pomocou SQLalchemy stahujem data z OpenProjectu, dalej ich spracujem pomocou kniznice pandas. Vysledok zobrazijem cez webovu kniznicu Streamlit.
+Aplikacia zistuje vytazenost CAD konstrukterov na rok dopredu.
+Tiez monitoruje zazaznamenane hodiny na projektoch a triedi ich podla vykonanych uloh.
+'''
+
+
+
 import pandas as pd
 from sqlalchemy import create_engine, text
 from calendra.europe import Slovakia, Poland
@@ -48,7 +56,7 @@ def get_data_from_sql(start_week, end_week, year):
 
     # add is_working day to dataframe
     for index, row in df.iterrows():
-        if row['user'] == "Bednarczyk" or row['user'] == "Jaworski":
+        if row['user'] == "User1" or row['user'] == "User2":
             df.loc[index, 'is_workday'] = Poland().is_working_day(row['date'])
         else:
             df.loc[index, 'is_workday'] = Slovakia().is_working_day(row['date'])
@@ -107,7 +115,7 @@ def timespent_per_user(df):
     sum_by_user = df.groupby('user').agg({'timespent': 'sum', 'vacation': 'sum'}).reset_index()
 
     for index, row in sum_by_user.iterrows():
-        if row['user'] == "Bednarczyk" or row['user'] == "Jaworski":
+        if row['user'] == "User1" or row['user'] == "User2":
             sum_by_user.loc[index,'workdays'] = work_days_pl
             sum_by_user.loc[index,'group'] = "PL"
             sum_by_user.loc[index,'manhours'] = row['timespent']
@@ -180,12 +188,12 @@ def timespent_per_user(df):
 
 def availability_of_CAD(df_av):
     # remove team tasks/holidays
-    df_av = df_av[df_av['lastname'] != 'Jaworski']
+    df_av = df_av[df_av['lastname'] != 'User2']
     df_av = df_av[df_av['lastname'] != 'Møller-Jacobsen']
     df_av = df_av[df_av['lastname'] != 'Team_DK']
 
     Team_SK = ["Jenčár", "Ondrejka", "Pero", "Varga", "Marček"]
-    Team_PL = ["Bednarczyk"]
+    Team_PL = ["User1"]
     
     if 'Team_SK' in df_av['lastname'].values:
         # Find Team_SK row and copy it
