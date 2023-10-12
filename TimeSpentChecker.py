@@ -52,7 +52,7 @@ def get_data_from_sql(start_week, end_week, year):
 
     # add is_working day to dataframe
     for index, row in df.iterrows():
-        if row['user'] == "Bednarczyk" or row['user'] == "Jaworski":
+        if row['user'] == "User1" or row['user'] == "User2":
             df.loc[index, 'is_workday'] = Poland().is_working_day(row['date'])
         else:
             df.loc[index, 'is_workday'] = Slovakia().is_working_day(row['date'])
@@ -75,7 +75,7 @@ def timespent_per_user(df):
     # sum_by_user = pd.DataFrame(sum_by_user).reset_index()
 
     for index, row in sum_by_user.iterrows():
-        if row['user'] == "Bednarczyk" or row['user'] == "Jaworski":
+        if row['user'] == "User1" or row['user'] == "User2":
             sum_by_user.loc[index,'workdays'] = work_days_pl
             sum_by_user.loc[index,'group'] = "PL"
             sum_by_user.loc[index,'labourfund'] = labour_fund_pl
