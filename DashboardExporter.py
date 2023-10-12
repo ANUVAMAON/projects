@@ -1,3 +1,9 @@
+'''
+Pomocou SQLalchemy stahujem data z OpenProjectu, dalej ich spracujem pomocou kniznice pandas. Vysledok exportujem do PDF suboru.
+Aplikacia zistuje vytazenost CAD konstrukterov na rok dopredu.
+'''
+
+
 import pandas as pd
 from sqlalchemy import create_engine, text
 import seaborn as sns
