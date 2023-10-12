@@ -1,3 +1,10 @@
+'''
+Pomocou SQLalchemy stahujem data z OpenProjectu, dalej ich spracujem pomocou kniznice pandas.
+Skript zistuje pocet zapisanych hodin do openprojectu. Zohladnuje pracovne dni. V pripade,
+ze chyba zapis v danom tyzdni, posiela email uzivatelovi.
+'''
+
+
 import pandas as pd
 from datetime import date
 import isoweek
@@ -114,11 +121,11 @@ def send_email(email, week, absence, user_name):
     # SMTP server configuration
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
-    smtp_username = 'noreply.avantea@gmail.com'
-    smtp_password = 'vowkgshymrmswtsb'
+    smtp_username = '@gmail.com'
+    smtp_password = ''
 
     # Sender and recipient details
-    sender_email = 'noreply.avantea@gmail.com'
+    sender_email = '@gmail.com'
     sender_alias = 'OpenProject Reminder'
     recipient_email = email
 
@@ -145,7 +152,6 @@ def send_email(email, week, absence, user_name):
             <p>Please ensure that you update your timesheets accordingly.</p>
 
             <p>Thank you,</p>
-            <p>Avantea Steel Solutions</p>
         </body>
         </html>
         '''
@@ -163,7 +169,6 @@ def send_email(email, week, absence, user_name):
             <p>Please ensure that you update your timesheets accordingly.</p>
 
             <p>Thank you,</p>
-            <p>Avantea Steel Solutions</p>
         </body>
         </html>
         '''
